@@ -12,7 +12,8 @@ import {
 import About from "./views/HomePage/Components/About";
 import Services from "./views/HomePage/Components/Services";
 import ContactUs from "./views/HomePage/Components/ContactUs";
-
+import Login from "./views/HomePage/Components/Login"
+import Signup from "./views/HomePage/Components/Signup"
 export default class App extends React.Component {
 
 state = {
@@ -60,17 +61,25 @@ showLoader = () =>{
   <div className="collapse navbar-collapse" id="navbarNav">
     <ul className="navbar-nav">
       <li className="nav-item active">
-        <NavLink to="/" className="nav-link" href="#">Home <span className="sr-only">(current)</span></NavLink>
+        <NavLink to="/" className="nav-link" >Home <span className="sr-only">(current)</span></NavLink>
       </li>
       <li className="nav-item">
-        <NavLink to="/about"className="nav-link" href="#">About Us</NavLink>
+        <NavLink to="/about"className="nav-link" >About Us</NavLink>
       </li>
       <li className="nav-item">
-        <NavLink to="/services" className="nav-link" href="#">Services</NavLink>
+        <NavLink to="/services" className="nav-link" >Services</NavLink>
       </li>
       <li className="nav-item ">
-        <NavLink to="/contact" className="nav-link" href="#">Contact Us</NavLink>
+        <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
       </li>
+      <li className="nav-item ">
+        <NavLink to="/signup" className="nav-link">Signup</NavLink>
+      </li>
+       
+      <li className="nav-item ">
+        <NavLink to="/login" className="nav-link">Login</NavLink>
+      </li>
+       
       {/* <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li> */}
@@ -97,6 +106,12 @@ showLoader = () =>{
 
           <Route path="/contact">
             <ContactUs showLoader = {this.showLoader} />
+          </Route>
+          <Route path="/signup">
+            <Signup showLoader = {this.showLoader} />
+          </Route>
+          <Route path="/login">
+            <Login showLoader = {this.showLoader} />
           </Route>
 
 
