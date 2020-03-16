@@ -73,6 +73,10 @@ showLoader = () =>{
         <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
       </li>
       <li className="nav-item ">
+        <NavLink to="/signup" className="nav-link">Signup</NavLink>
+      </li>
+       
+      <li className="nav-item ">
         <NavLink to="/login" className="nav-link">Login</NavLink>
       </li>
        
