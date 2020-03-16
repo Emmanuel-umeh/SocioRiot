@@ -74,7 +74,9 @@ export default class Login extends React.Component{
               
             </div>
             <div className="form-group mt-3">
+                <center>
               <button type="submit" className="button button-contactForm boxed-btn">Login</button>
+              </center>
             </div>
           </form>
         </div>
