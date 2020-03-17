@@ -26,7 +26,7 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
   axios
-    .get('http://socioriotapi.herokuapp.com/api/users', tokenConfig(getState))
+    .get('/api/users', tokenConfig(getState))
     .then(res =>
       dispatch({
         type: USER_LOADED,
@@ -92,8 +92,8 @@ export const OauthGoogle = (data) => dispatch => {
   console.log("we received data ",data)
   const config = {
     headers:{
-      'X-Requested-With': 'XMLHttpRequest',
-      "Access-Control-Allow-Headers":"Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+      'Content-Type': 'application/json'
+      // "Access-Control-Allow-Headers":"Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
     }
   };
 
@@ -108,7 +108,7 @@ export const OauthGoogle = (data) => dispatch => {
     console.log("consoling the body from googleoauth action ",body)
    
        
-        axios.post('https://socioriotapi.herokuapp.com/users/oauth/google', body, config)
+        axios.post('/api/signup/oauth/google', body, config)
         .then(res =>
 
           {
