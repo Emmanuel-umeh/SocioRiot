@@ -92,7 +92,8 @@ export const OauthGoogle = (data) => dispatch => {
   console.log("we received data ",data)
   const config = {
     headers:{
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-Requested-With': 'XMLHttpRequest',
+      "Access-Control-Allow-Headers":"Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
     }
   };
 
