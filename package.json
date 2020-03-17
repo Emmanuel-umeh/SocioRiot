@@ -24,7 +24,6 @@
     "eject": "react-scripts eject",
     "heroku-postbuild": "react-scripts build"
   },
-  // "proxy": "https://socioriotapi.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
