@@ -9,27 +9,7 @@ export default class HomePage extends React.Component{
   {/* Slider Area Start*/}
   <div className="slider-area ">
     <div className="slider-active">
-      <div className="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.png">
-        <div className="container">
-          <div className="row d-flex align-items-center">
-            <div className="col-lg-7 col-md-9 ">
-              <div className="hero__caption">
-                <h1 data-animation="fadeInLeft" data-delay=".4s">We Collect<br /> High Quality Leads</h1>
-                <p data-animation="fadeInLeft" data-delay=".6s">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravi.</p>
-                {/* Hero-btn */}
-                <div className="hero__btn" data-animation="fadeInLeft" data-delay=".8s">
-                  <a href="industries.html" className="btn hero-btn">Contact Us</a>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-5">
-              <div className="hero__img d-none d-lg-block" data-animation="fadeInRight" data-delay="1s">
-                <img src="assets/img/hero/hero_right.png" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div className="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.png">
         <div className="container">
           <div className="row d-flex align-items-center">

@@ -20,7 +20,8 @@ import Signup from "./views/HomePage/Components/Signup"
 import Successful from "./views/HomePage/Components/loggIn";
 import {clearErrors} from './actions/errorActions'
 import { loadUser } from "./actions/authActions";
- class App extends React.Component {
+import Aux from "./hoc/Aux"
+class App extends React.Component {
 
 state = {
   visible : false,
@@ -100,14 +101,14 @@ componentDidMount() {
       {isAuthenticated ? (<li className="nav-item ">
         <NavLink to="/signup" className="nav-link">Logout</NavLink>
       </li>)  :
-     (<div>
+     (<Aux>
       <li className="nav-item ">
         <NavLink to="/signup" className="nav-link">Signup</NavLink>
       </li>
        
       <li className="nav-item ">
         <NavLink to="/login" className="nav-link">Login</NavLink>
-      </li></div>)
+      </li></Aux>)
     }
       {/* {user && this.props.auth.isAuthenticated ? <h2 className="nav-item ">
         Welcome {this.props.auth.user.local.email}
