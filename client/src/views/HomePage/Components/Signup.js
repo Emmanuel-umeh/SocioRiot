@@ -12,6 +12,7 @@ import {register} from '../../../actions/authActions'
 import zxcvbn from 'zxcvbn'
 
 import {withRouter} from 'react-router-dom'
+import "../../../css/googleButton.css"
 // import e from 'express';
 
 
@@ -229,20 +230,27 @@ this.props.history.push('/loggedIn')
               </center>
             </div>
           </form>
+          <center><h3>OR</h3></center>
+          <div style={{textAlign:"center", paddingLeft:"10%"}}>
+          <GoogleLogin
+          className="btn-block google"
+          clientId="483013763707-jm3aknuh39grrronsu81rtn5588c32m8.apps.googleusercontent.com"
+          buttonText="LOGIN WITH GOOGLE"
+          onSuccess={this.responseGoogle}
+          onFailure={this.error}
+          cookiePolicy={'single_host_origin'}
+        
+          // style={{color:"red", width:'100%'}}
+  />
+    </div>
+
         </div>
 
 
         {/* google login */}
 
         <div>
-        <GoogleLogin
-    clientId="483013763707-jm3aknuh39grrronsu81rtn5588c32m8.apps.googleusercontent.com"
-    buttonText="Login"
-    onSuccess={this.responseGoogle}
-    onFailure={this.error}
-    cookiePolicy={'single_host_origin'}
-  />
-
+    
         </div>
 
 
