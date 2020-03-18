@@ -25,12 +25,9 @@ var app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-<<<<<<< HEAD
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');
 
-=======
->>>>>>> 30efac57b5f65da4e6be6408198ac726b16238f1
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -83,8 +80,4 @@ const server = app.listen(app.get("port"), () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });
 
-<<<<<<< HEAD
 // module.exports = app;
-=======
-module.exports = app;
->>>>>>> 30efac57b5f65da4e6be6408198ac726b16238f1
