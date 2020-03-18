@@ -1,9 +1,27 @@
 import React from 'react'
 
-export default class Signup extends React.Component{
+import { connect } from "react-redux";
+import GoogleLogin from "react-google-login";
+import axios from 'axios'
+import PropTypes from "prop-types";
+import register from '../../../actions/authActions'
+import {OauthGoogle} from '../../../actions/authActions'
+import { clearErrors } from "../../../actions/errorActions";
+
+import {withRouter} from 'react-router-dom'
+
+
+class Signup extends React.Component{
   constructor(props){
     super(props)
   }
+
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    error: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
+  };
     
   componentDidMount() {
   
@@ -14,6 +32,45 @@ export default class Signup extends React.Component{
       // .then(response => response.json())
        this.props.showLoader();
       }, 1200);
+  }
+
+  
+  responseGoogle = async res => {
+    // console.log("response google", res);
+    // console.log(res.accessToken);
+    // console.log(res.profileObj.email);
+
+    const email = res.profileObj.email
+
+    await this.props.OauthGoogle(res.accessToken,email);
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }   
+
+    await sleep(5000);
+    const { user, isAuthenticated } = this.props.auth;
+
+    console.log("Google user after sleep", user)
+   
+  
+      if(user ){
+        // this.props.showLoader()
+        await sleep(2000);
+
+        console.log("Logged in")
+          // this.props.history.push("/sponsor")
+          
+          // window.location.reload()
+          // this.props.hideLoader()
+        
+        }
+  
+    
+    
+  };
+
+  error =(err)=>{
+    console.log(err)
   }
     render(){
 
@@ -110,6 +167,23 @@ export default class Signup extends React.Component{
             </div>
           </form>
         </div>
+
+
+        {/* google login */}
+
+        <div>
+        <GoogleLogin
+    clientId="483013763707-jm3aknuh39grrronsu81rtn5588c32m8.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={this.responseGoogle}
+    onFailure={this.error}
+    cookiePolicy={'single_host_origin'}
+  />
+
+        </div>
+
+
+        {/* {"end google login"} */}
         <div className="col-lg-3 offset-lg-1">
           <div className="media contact-info">
             <span className="contact-info__icon"><i className="ti-home" /></span>
@@ -145,3 +219,12 @@ export default class Signup extends React.Component{
         )
     }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  error: state.error
+});
+
+export default connect(mapStateToProps, { clearErrors, OauthGoogle })(
+  withRouter(Signup)
+);

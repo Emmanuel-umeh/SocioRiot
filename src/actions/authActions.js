@@ -43,7 +43,7 @@ export const loadUser = () => (dispatch, getState) => {
 
 
 // Register User
-export const register = ({ firstName, lastName, email, password, account, money }) => dispatch => {
+export const register = ({  email, password }) => dispatch => {
   // Headers
   const config = {
       headers: {
@@ -55,7 +55,7 @@ export const register = ({ firstName, lastName, email, password, account, money 
   console.log(config)
 
   // Request body
-  const body = JSON.stringify({firstName, lastName, email, password, account,money });
+  const body = JSON.stringify({ email, password})
 
     console.log("consoling the body from register action ",body)
   // fetch('/api/users', {
@@ -68,7 +68,7 @@ export const register = ({ firstName, lastName, email, password, account, money 
   //   console.log("regsterd")
   // )
 
-    axios.post('/api/users', body, config)
+    axios.post('http://socioriotapi.herokuapp.com/api/signUp', body, config)
     .then(res =>
       dispatch({
         type: REGISTER_SUCCESS,
@@ -84,6 +84,62 @@ export const register = ({ firstName, lastName, email, password, account, money 
         type: REGISTER_FAIL
       });
     });
+};
+
+
+export const OauthGoogle = (data) => dispatch => {
+  // Headers
+  console.log("we received data ",data)
+  const config = {
+    headers:{
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  };
+
+  // console.log(config)
+
+  const access_token = data
+ 
+// console.log("passed email ",email)
+  // Request body
+  const body = JSON.stringify({access_token});
+
+    console.log("consoling the body from googleoauth action ",body)
+   
+       
+        axios.post('http://socioriotapi.herokuapp.com/api/users/oauth/google', body, config)
+        .then(res =>
+
+          {
+            dispatch({
+              type: REGISTER_SUCCESS,
+              payload: res.data
+            })
+
+            console.log("registered successfully")
+      
+            // window.location.href = 'http://pacfarms.herokuapp.com/sponsor'
+            // window.location.href = 'http://localhost:3000/sponsor'
+
+
+          
+          }
+          
+          
+        )
+        // .then(
+        //   res => res.redirect('http://localhost:3000/sponsor')
+        // )
+        .catch(err => {
+          dispatch(
+            returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
+          );
+          console.log(err)
+          dispatch({
+            type: REGISTER_FAIL
+          });
+        });
+    
 };
 
 // Login User
