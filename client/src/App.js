@@ -14,6 +14,7 @@ import Services from "./views/HomePage/Components/Services";
 import ContactUs from "./views/HomePage/Components/ContactUs";
 import Login from "./views/HomePage/Components/Login"
 import Signup from "./views/HomePage/Components/Signup"
+import Successful from "./views/HomePage/Components/loggIn";
 export default class App extends React.Component {
 
 state = {
@@ -113,6 +114,10 @@ showLoader = () =>{
           <Route path="/login">
             <Login showLoader = {this.showLoader} />
           </Route>
+          <Route path="/loggedIn">
+            <Successful />
+          </Route>
+
 
 
           

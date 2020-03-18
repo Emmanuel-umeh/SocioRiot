@@ -10,6 +10,7 @@
     "http-proxy-middleware": "^1.0.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-fade-in": "^0.1.8",
     "react-google-login": "^5.1.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
