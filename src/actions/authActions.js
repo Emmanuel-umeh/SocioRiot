@@ -107,7 +107,7 @@ export const OauthGoogle = (data) => dispatch => {
     console.log("consoling the body from googleoauth action ",body)
    
        
-        axios.post('http://socioriotapi.herokuapp.com/api/users/oauth/google', body, config)
+        axios.post('https://socioriotapi.herokuapp.com/users/oauth/google', body, config)
         .then(res =>
 
           {
