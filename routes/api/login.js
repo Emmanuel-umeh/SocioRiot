@@ -28,35 +28,37 @@ router.post('/', (req, res) => {
   }
 
   // Check for existing user
-  User.findOne({ email :email })
+  User.findOne({ "local.email" :email })
     .then(user => {
       if(!user) return res.status(400).json({ msg: 'User Does not exist' });
 
       // Validate password
-      console.log("user password", user.password)
+      console.log("user password", user.local.password)
       console.log(password)
-      bcrypt.compare(password, user.password)
+      bcrypt.compare(password, user.local.password)
         .then(isMatch => {
           if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
+          console.log(user._id)
+
           jwt.sign(
-            { id: user.id },
+            { id: user._id },
             'jwtSecret',
             { expiresIn:10000 },
             (err, token) => {
               if(err) throw err;
-              res.json({
+              res.status(200).json({
                 token,
                 user: {
-                  id: user.id,
+                  id: user._id,
                 //   method : user.method,
-                  firstName:user.firstName,
-                  lastName:user.lastName,
-                  email:user.email,
-                  companyName:user.companyName,
-                  companyType:user.companyType,
-                  industry:user.industry,
-                  country  :user.country,
+                  firstName:user.local.firstName,
+                  lastName:user.local.lastName,
+                  email:user.local.email,
+                  companyName:user.local.companyName,
+                  companyType:user.local.companyType,
+                  industry:user.local.industry,
+                  country  :user.local.country,
                   date :user.local.date
                 }
               });
@@ -64,7 +66,7 @@ router.post('/', (req, res) => {
           )
         })
     })   .catch(e => {
-      res.redirect("/");
+      // res.redirect("/");
       console.log(e);
     });
 });
