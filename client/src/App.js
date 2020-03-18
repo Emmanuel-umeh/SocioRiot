@@ -1,6 +1,9 @@
 import React from "react";
 // import logo from './logo.svg';
 // import './App.css';
+import { connect } from "react-redux";
+import store from "./store";
+// import {withRouter} from 'react-router-dom'
 import HomePage from "./views/HomePage/Components/Home";
 import {
   Route,
@@ -15,10 +18,13 @@ import ContactUs from "./views/HomePage/Components/ContactUs";
 import Login from "./views/HomePage/Components/Login"
 import Signup from "./views/HomePage/Components/Signup"
 import Successful from "./views/HomePage/Components/loggIn";
-export default class App extends React.Component {
+import {clearErrors} from './actions/errorActions'
+import { loadUser } from "./actions/authActions";
+ class App extends React.Component {
 
 state = {
-  visible : false
+  visible : false,
+  user : null
 }
 showLoader = () =>{
   this.setState({
@@ -26,11 +32,29 @@ showLoader = () =>{
   })
 }
 
+// componentDidMount(){
+//   const { user, isAuthenticated, token } = this.props.auth;
+
+//   if(user || isAuthenticated){
+//     this.setState({
+//       user : user
+//     })
+//   }
+
+// }
+componentDidMount() {
+
+  store.dispatch(loadUser());
+
+}
+
 
   render() {
 
     
-
+    const { isAuthenticated, user } = this.props.auth;
+    console.log("is authenticated app.js ", isAuthenticated)
+    console.log("user details ", user)
 
     return (
       <div>
@@ -73,13 +97,21 @@ showLoader = () =>{
       <li className="nav-item ">
         <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
       </li>
+      {isAuthenticated ? (<li className="nav-item ">
+        <NavLink to="/signup" className="nav-link">Logout</NavLink>
+      </li>)  :
+     (<div>
       <li className="nav-item ">
         <NavLink to="/signup" className="nav-link">Signup</NavLink>
       </li>
        
       <li className="nav-item ">
         <NavLink to="/login" className="nav-link">Login</NavLink>
-      </li>
+      </li></div>)
+    }
+      {/* {user && this.props.auth.isAuthenticated ? <h2 className="nav-item ">
+        Welcome {this.props.auth.user.local.email}
+      </h2>: <div></div> } */}
        
       {/* <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
@@ -112,7 +144,9 @@ showLoader = () =>{
             <Signup showLoader = {this.showLoader} />
           </Route>
           <Route path="/login">
+            {isAuthenticated ? <HomePage /> :
             <Login showLoader = {this.showLoader} />
+          }
           </Route>
           <Route path="/loggedIn">
             <Successful />
@@ -284,3 +318,12 @@ showLoader = () =>{
     );
   }
 }
+
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  error: state.error
+});
+export default connect(mapStateToProps, {clearErrors})(
+  App
+);

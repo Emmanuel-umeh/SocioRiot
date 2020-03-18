@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { returnErrors } from './errorActions';
+import {withRouter} from 'react-router-dom'
 
 
 import {
@@ -26,7 +27,7 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
   axios
-    .get('/api/users', tokenConfig(getState))
+    .get('/api/users/user', tokenConfig(getState))
     .then(res =>
       dispatch({
         type: USER_LOADED,
@@ -43,7 +44,7 @@ export const loadUser = () => (dispatch, getState) => {
 
 
 // Register User
-export const register = ({  email, password }) => dispatch => {
+export const register = ({  username,email, password }) => dispatch => {
   // Headers
   const config = {
       headers: {
@@ -55,7 +56,7 @@ export const register = ({  email, password }) => dispatch => {
   console.log(config)
 
   // Request body
-  const body = JSON.stringify({ email, password})
+  const body = JSON.stringify({ username,email, password})
 
     console.log("consoling the body from register action ",body)
   // fetch('/api/users', {
@@ -68,12 +69,15 @@ export const register = ({  email, password }) => dispatch => {
   //   console.log("regsterd")
   // )
 
-    axios.post('http://socioriotapi.herokuapp.com/api/signUp', body, config)
-    .then(res =>
+    axios.post('/api/signup', body, config)
+    .then(res => {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       })
+      // window.location.href = "http://localhost:3000/loggedIn"
+    }
+     
     )
     .catch(err => {
       dispatch(
@@ -117,8 +121,8 @@ export const OauthGoogle = (data) => dispatch => {
               payload: res.data
             })
 
-            console.log("registered successfully")
-      
+            console.log("logged in successfully")
+            window.location.href = "http://localhost:3000/loggedIn"
             // window.location.href = 'http://pacfarms.herokuapp.com/sponsor'
             // window.location.href = 'http://localhost:3000/sponsor'
 
@@ -155,13 +159,28 @@ export const login = ({ email, password }) => dispatch => {
   // Request body
   const body = JSON.stringify({ email, password });
 
+  console.log(config)
+
+  console.log("body " , body)
+
   axios
-    .post('/api/auth', body, config)
-    .then(res =>
+    .post('/api/login', body, config)
+    .then(res =>{
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
       })
+
+      console.log("logged in successfully")
+      console.log(res.data)
+      window.location.href = "http://localhost:3000/loggedIn"
+      
+
+    }
+
+      // console.log("this is the res ", res)
+    
+      
     )
     .catch(err => {
       dispatch(
