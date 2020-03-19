@@ -4,16 +4,49 @@ import { connect } from "react-redux";
 import GoogleLogin from "react-google-login";
 import axios from 'axios'
 import PropTypes from "prop-types";
-import register from '../../../actions/authActions'
+// import register from '../../../actions/authActions'
 import {OauthGoogle} from '../../../actions/authActions'
 import { clearErrors } from "../../../actions/errorActions";
+import {register} from '../../../actions/authActions'
+
+import zxcvbn from 'zxcvbn'
 
 import {withRouter} from 'react-router-dom'
+// import e from 'express';
 
 
 class Signup extends React.Component{
   constructor(props){
-    super(props)
+    super(props);
+    this.state = {
+      type: 'input',
+      score: 'null'
+    }
+    this.showHide = this.showHide.bind(this);
+    this.passwordStrength = this.passwordStrength.bind(this);
+  }
+  
+  showHide(e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })  
+  }
+  
+  passwordStrength(e){
+    if(e.target.value === ''){
+      this.setState({
+        score: 'null'
+      })
+    }
+    else{
+      var pw = zxcvbn(e.target.value);
+      this.setState({
+        score: pw.score
+      });      
+    }
+
   }
 
   static propTypes = {
@@ -56,9 +89,15 @@ class Signup extends React.Component{
       if(user ){
         // this.props.showLoader()
         await sleep(2000);
+        console.log("this is the user " ,user)
 
         console.log("Logged in")
           // this.props.history.push("/sponsor")
+
+
+
+          
+    this.props.history.push('/loggedIn')
           
           // window.location.reload()
           // this.props.hideLoader()
@@ -68,6 +107,24 @@ class Signup extends React.Component{
     
     
   };
+
+  signup = async(e) => {
+    e.preventDefault()
+
+    console.log("SIGNUP")
+    const username = this.username.value
+    const email = this.email.value
+    const password = this.password2.value
+
+console.log({username,email,password})
+
+await this.props.register({username,email,password})
+
+
+this.props.history.push('/loggedIn')
+
+
+  }
 
   error =(err)=>{
     console.log(err)
@@ -99,7 +156,7 @@ class Signup extends React.Component{
           <h2 className="contact-title">Signup</h2>
         </div>
         <div className="col-lg-8">
-          <form className="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" noValidate="novalidate">
+          <form className="form-contact contact_form" onSubmit = {this.signup}>
             <div className="row">
             <div className="col-12">
                 <div className="form-group">
@@ -130,7 +187,7 @@ class Signup extends React.Component{
                 </div>
               </div>
               <div className="col-12">
-                <div className="form-group">
+                {/* <div className="form-group">
                   <input 
                         className="form-control" 
                         name="password" 
@@ -142,11 +199,17 @@ class Signup extends React.Component{
                         ref = {(input) => this.password = input}
                         />
                         
-                </div>
+                </div> */}
               </div>
               <div className="col-12">
                 <div className="form-group">
-                  <input 
+
+                <label className="password">Password
+      <input type={this.state.type} className="password__input" onChange={this.passwordStrength}   ref = {(input) => this.password2 = input} />
+      <span className="password__show" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
+      <span className="password__strength" data-score={this.state.score} />
+      </label>
+                  {/* <input 
                         className="form-control" 
                         name="password2" 
                         id="password2" 
@@ -155,14 +218,14 @@ class Signup extends React.Component{
                         onblur="this.placeholder = 'Enter Password'" 
                         placeholder="Confirm Password" 
                         ref = {(input) => this.password2 = input}
-                        />
+                        /> */}
                 </div>
               </div>
               
             </div>
             <div className="form-group mt-3">
                 <center>
-              <button type="submit" className="button button-contactForm boxed-btn">Login</button>
+              <button type="submit" className="button button-contactForm boxed-btn">Signup</button>
               </center>
             </div>
           </form>
@@ -184,29 +247,6 @@ class Signup extends React.Component{
 
 
         {/* {"end google login"} */}
-        <div className="col-lg-3 offset-lg-1">
-          <div className="media contact-info">
-            <span className="contact-info__icon"><i className="ti-home" /></span>
-            <div className="media-body">
-              <h3>Buttonwood, California.</h3>
-              <p>Rosemead, CA 91770</p>
-            </div>
-          </div>
-          <div className="media contact-info">
-            <span className="contact-info__icon"><i className="ti-tablet" /></span>
-            <div className="media-body">
-              <h3>+1 253 565 2365</h3>
-              <p>Mon to Fri 9am to 6pm</p>
-            </div>
-          </div>
-          <div className="media contact-info">
-            <span className="contact-info__icon"><i className="ti-email" /></span>
-            <div className="media-body">
-              <h3>support@colorlib.com</h3>
-              <p>Send us your query anytime!</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -225,6 +265,6 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { clearErrors, OauthGoogle })(
+export default connect(mapStateToProps, {register, clearErrors, OauthGoogle })(
   withRouter(Signup)
 );

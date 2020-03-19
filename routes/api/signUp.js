@@ -24,7 +24,8 @@ router.post("/", (req, res) => {
 
   const {
     // firstName,
-    // lastName,
+    // lastName,'
+    username,
     email,
     password,
     // companyName,
@@ -37,6 +38,7 @@ router.post("/", (req, res) => {
   if (
     // !firstName ||
     // !lastName ||
+    !username||
     !email ||
     !password 
     // !companyName ||
@@ -48,13 +50,14 @@ router.post("/", (req, res) => {
   }
 
   // Check for existing user
-  User.findOne({ email: email }).then(user => {
+  User.findOne({ "local.email": email }).then(user => {
     if (user) return res.status(400).json({ msg: "User already exists" });
 
     const newUser = new User({
       local: {
         // firstName,
         // lastName,
+        username,
         email,
         password,
         // companyName,
@@ -83,6 +86,7 @@ router.post("/", (req, res) => {
                
                   // firstName: user.local.firstName,
                   // lastName: user.local.lastName,
+                  username:user.local.username,
                   email: user.local.email,
                   // companyName: user.local.companyName,
                   // companyType: user.local.companyType

@@ -54,6 +54,7 @@ router.post('/', (req, res) => {
                 //   method : user.method,
                   firstName:user.local.firstName,
                   lastName:user.local.lastName,
+                  username:user.local.username,
                   email:user.local.email,
                   companyName:user.local.companyName,
                   companyType:user.local.companyType,

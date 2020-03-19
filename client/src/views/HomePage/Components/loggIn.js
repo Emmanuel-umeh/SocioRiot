@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import * as Done from "../../../anime/done.json"
+import {withRouter} from 'react-router-dom'
 
 
 
@@ -14,12 +15,21 @@ const defaultOptions = {
     }
 }
 class Successful extends Component {
+
+    constructor(props){
+        super(props)
+    }
     componentDidMount(){
-        setTimeout({
-            // this.props.hist
-        },1200)
+        setTimeout(() => {
+            this.navigate()
+          }, 3000);
     }
     // state = {  }
+
+
+navigate = (e) => {
+this.props.history.push('/')
+}
     render() { 
         return ( 
             <div>
@@ -46,4 +56,4 @@ class Successful extends Component {
     }
 }
  
-export default Successful;
+export default withRouter(Successful) ;
