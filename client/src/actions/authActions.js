@@ -122,7 +122,7 @@ export const OauthGoogle = (data) => dispatch => {
             })
 
             console.log("logged in successfully")
-            window.location.href = "http://localhost:3000/loggedIn"
+            window.location.href = "https://sociariot-cl.herokuapp.com/loggedIn"
             // window.location.href = 'http://pacfarms.herokuapp.com/sponsor'
             // window.location.href = 'http://localhost:3000/sponsor'
 
@@ -173,7 +173,7 @@ export const login = ({ email, password }) => dispatch => {
 
       console.log("logged in successfully")
       console.log(res.data)
-      window.location.href = "http://localhost:3000/loggedIn"
+      window.location.href = "https://sociariot-cl.herokuapp.com/loggedIn"
       
 
     }
