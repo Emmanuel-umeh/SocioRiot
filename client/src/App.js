@@ -19,7 +19,8 @@ import Login from "./views/HomePage/Components/Login"
 import Signup from "./views/HomePage/Components/Signup"
 import Successful from "./views/HomePage/Components/loggIn";
 import {clearErrors} from './actions/errorActions'
-import { loadUser } from "./actions/authActions";
+import { loadUser, logout } from "./actions/authActions";
+
 import Aux from "./hoc/Aux"
 class App extends React.Component {
 
@@ -31,6 +32,10 @@ showLoader = () =>{
   this.setState({
     visible : !this.state.visible
   })
+}
+
+logOut = () =>{
+this.props.logout()
 }
 
 // componentDidMount(){
@@ -99,7 +104,7 @@ componentDidMount() {
         <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
       </li>
       {isAuthenticated ? (<li className="nav-item ">
-        <NavLink to="/signup" className="nav-link">Logout</NavLink>
+        <NavLink to="/signup" className="nav-link" onClick= {this.logOut} >Logout</NavLink>
       </li>)  :
      (<Aux>
       <li className="nav-item ">
@@ -325,6 +330,6 @@ const mapStateToProps = state => ({
   auth: state.auth,
   error: state.error
 });
-export default connect(mapStateToProps, {clearErrors})(
+export default connect(mapStateToProps, {clearErrors, logout})(
   App
 );
