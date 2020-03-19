@@ -21,7 +21,7 @@ import Successful from "./views/HomePage/Components/loggIn";
 import {clearErrors} from './actions/errorActions'
 import { loadUser, logout } from "./actions/authActions";
 
-import Aux from "./hoc/Aux"
+// import Aux from "./hoc/Aux"
 class App extends React.Component {
 
 state = {
@@ -106,14 +106,15 @@ componentDidMount() {
       {isAuthenticated ? (<li className="nav-item ">
         <NavLink to="/signup" className="nav-link" onClick= {this.logOut} >Logout</NavLink>
       </li>)  :
-     (<Aux>
+     (
       <li className="nav-item ">
         <NavLink to="/signup" className="nav-link">Signup</NavLink>
       </li>
        
       <li className="nav-item ">
         <NavLink to="/login" className="nav-link">Login</NavLink>
-      </li></Aux>)
+      </li>
+      )
     }
       {/* {user && this.props.auth.isAuthenticated ? <h2 className="nav-item ">
         Welcome {this.props.auth.user.local.email}
