@@ -194,6 +194,7 @@ export const login = ({ email, password }) => dispatch => {
 
 // Logout User
 export const logout = () => {
+  window.location.href = "http://localhost:3000" 
   return {
     type: LOGOUT_SUCCESS
   };
